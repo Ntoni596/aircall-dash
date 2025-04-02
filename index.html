@@ -10,8 +10,8 @@
             max-width: 100%;
             margin: 0;
             padding: 10px;
-            background-color: transparent;
-            color: #333;
+            background-color: #121212;
+            color: #e0e0e0;
         }
         .dashboard {
             display: grid;
@@ -24,10 +24,10 @@
             }
         }
         .card {
-            background-color: white;
+            background-color: #1e1e1e;
             border-radius: 6px;
             padding: 15px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
             margin-bottom: 10px;
         }
         .full-width {
@@ -36,15 +36,18 @@
         h1 {
             font-size: 1.5rem;
             margin-top: 0;
+            color: #e0e0e0;
         }
         h2 {
             font-size: 1.2rem;
             margin-top: 0;
+            color: #e0e0e0;
         }
         h3 {
             font-size: 0.9rem;
             margin: 0;
             font-weight: 600;
+            color: #e0e0e0;
         }
         .stats {
             display: grid;
@@ -52,7 +55,7 @@
             gap: 10px;
         }
         .stat-card {
-            background-color: #f9f9f9;
+            background-color: #272727;
             border-radius: 6px;
             padding: 12px;
             text-align: center;
@@ -61,6 +64,7 @@
             font-size: 20px;
             font-weight: bold;
             margin: 8px 0;
+            color: #7B68EE;
         }
         table {
             width: 100%;
@@ -70,28 +74,32 @@
         th, td {
             padding: 8px;
             text-align: left;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #333;
             font-size: 0.9rem;
         }
         th {
-            background-color: #f5f5f5;
+            background-color: #272727;
             font-weight: 600;
         }
         input[type="number"], input[type="text"] {
             width: 70px;
             padding: 4px;
-            border: 1px solid #ddd;
+            border: 1px solid #444;
             border-radius: 4px;
             font-size: 0.9rem;
+            background-color: #2d2d2d;
+            color: #e0e0e0;
         }
         input[type="text"] {
             width: 120px;
         }
         select {
             padding: 4px;
-            border: 1px solid #ddd;
+            border: 1px solid #444;
             border-radius: 4px;
             font-size: 0.9rem;
+            background-color: #2d2d2d;
+            color: #e0e0e0;
         }
         button {
             background-color: #7B68EE;
@@ -115,7 +123,7 @@
         .missed-calls-section {
             margin-top: 15px;
             padding: 12px;
-            background-color: #f9f9f9;
+            background-color: #272727;
             border-radius: 6px;
         }
         .missed-calls-grid {
@@ -140,48 +148,92 @@
             margin-bottom: 10px;
         }
         .save-btn {
-            background-color: #28a745;
+            background-color: #2ecc71;
         }
         .save-btn:hover {
-            background-color: #218838;
+            background-color: #27ae60;
         }
         .load-btn {
-            background-color: #007bff;
+            background-color: #3498db;
         }
         .load-btn:hover {
-            background-color: #0069d9;
+            background-color: #2980b9;
         }
         .clear-btn {
-            background-color: #dc3545;
+            background-color: #e74c3c;
         }
         .clear-btn:hover {
-            background-color: #c82333;
+            background-color: #c0392b;
         }
         .error-message {
-            color: red;
+            color: #ff6b6b;
             padding: 10px;
-            border: 1px solid red;
+            border: 1px solid #ff6b6b;
             margin: 10px 0;
             display: none;
+            background-color: rgba(255, 107, 107, 0.1);
         }
         .success-message {
-            color: green;
+            color: #2ecc71;
             padding: 10px;
-            border: 1px solid green;
+            border: 1px solid #2ecc71;
             margin: 10px 0;
             display: none;
+            background-color: rgba(46, 204, 113, 0.1);
+        }
+        .team-id-input {
+            padding: 8px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            width: 150px;
+            margin-right: 10px;
+            font-size: 0.9rem;
+            background-color: #2d2d2d;
+            color: #e0e0e0;
+        }
+        .sync-container {
+            margin-bottom: 15px;
+            padding: 12px;
+            background-color: #272733;
+            border-radius: 6px;
+            border: 1px solid #333344;
+        }
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: #3498db;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+            display: none;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
+    <h1>AirCall Data Visualization</h1>
     
     <div class="error-message" id="error-container"></div>
     <div class="success-message" id="success-container"></div>
     
+    <div class="sync-container">
+        <h3>Team Sync</h3>
+        <p>Enter a team ID to sync data across devices. Share this ID with your team members.</p>
+        <input type="text" id="team-id" class="team-id-input" placeholder="e.g., sales-team-1">
+        <button id="connect-team" class="load-btn">Connect to Team</button>
+        <span id="loading-spinner" class="loading-spinner"></span>
+        <div id="connection-status"></div>
+    </div>
+    
     <div class="button-container">
         <button id="save-data" class="save-btn">Save Data</button>
-        <button id="load-data" class="load-btn">Load Saved Data</button>
-        <button id="clear-data" class="clear-btn">Clear Saved Data</button>
+        <button id="load-data" class="load-btn">Load Data</button>
+        <button id="clear-data" class="clear-btn">Clear Data</button>
     </div>
     
     <div class="dashboard">
@@ -323,8 +375,36 @@
         </div>
     </div>
 
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-app-compat.js"></script>
+    <!-- Firebase Database -->
+    <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-database-compat.js"></script>
+    <!-- Chart.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    
     <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAJXH9yHOhD2XLCMRIVDM7kgxR0db2TiO4",
+            authDomain: "aircalldata.firebaseapp.com",
+            databaseURL: "https://aircalldata-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "aircalldata",
+            storageBucket: "aircalldata.firebasestorage.app",
+            messagingSenderId: "630404917854",
+            appId: "1:630404917854:web:7a18eb351e9bc2ef35a2cf",
+            measurementId: "G-0DRN6VNJXS"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        
+        // Variables
+        let teamId = null;
+        let callsChart = null;
+        let missedChart = null;
+        let dataRef = null;
+        
         // Helper functions for safer execution
         function showError(message) {
             const errorContainer = document.getElementById('error-container');
@@ -344,6 +424,17 @@
             }, 3000);
         }
         
+        function showLoading(show) {
+            const spinner = document.getElementById('loading-spinner');
+            spinner.style.display = show ? 'inline-block' : 'none';
+        }
+        
+        function updateConnectionStatus(status, isConnected) {
+            const statusElem = document.getElementById('connection-status');
+            statusElem.textContent = status;
+            statusElem.style.color = isConnected ? '#2ecc71' : '#aaa';
+        }
+        
         // Wait for Chart.js to fully load
         function waitForChartJs(callback, attempts = 0) {
             if (window.Chart) {
@@ -355,196 +446,133 @@
             }
         }
         
-        // Generate a unique key for local storage
-        function getStorageKey() {
-            try {
-                let path = "default";
-                try {
-                    // Try to get some uniqueness from the URL
-                    path = window.location.pathname || "default";
-                } catch (e) {
-                    // Silent fail
-                }
-                return 'aircall_data_' + path.replace(/\//g, '_');
-            } catch (e) {
-                return 'aircall_data_default';
-            }
-        }
-        
-        // Check if localStorage is available
-        function isLocalStorageAvailable() {
-            try {
-                const test = "__test__";
-                localStorage.setItem(test, test);
-                localStorage.removeItem(test);
-                return true;
-            } catch (e) {
-                return false;
-            }
-        }
-        
-        // Initialize the application
-        function initApp() {
-            let callsChart = null;
-            let missedChart = null;
+        // Connect to a team database
+        function connectToTeam() {
+            const teamIdInput = document.getElementById('team-id').value.trim();
             
-            // Safely initialize charts
-            function safeInitCharts() {
-                try {
-                    const callsCtx = document.getElementById('callsChart').getContext('2d');
-                    callsChart = new Chart(callsCtx, {
-                        type: 'bar',
-                        data: {
-                            labels: ['Team Member 1', 'Team Member 2'],
-                            datasets: [
-                                {
-                                    label: 'Inbound Calls',
-                                    backgroundColor: 'rgba(54, 162, 235, 0.8)',
-                                    data: [0, 0]
-                                },
-                                {
-                                    label: 'Outbound Calls',
-                                    backgroundColor: 'rgba(75, 192, 192, 0.8)',
-                                    data: [0, 0]
-                                }
-                            ]
-                        },
-                        options: {
-                            plugins: {
-                                title: {
-                                    display: true,
-                                    text: 'Call Distribution by Team Member'
-                                },
-                            },
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                x: {
-                                    stacked: false,
-                                },
-                                y: {
-                                    beginAtZero: true,
-                                    title: {
-                                        display: true,
-                                        text: 'Number of Calls'
-                                    }
-                                }
+            if (!teamIdInput) {
+                showError("Please enter a team ID");
+                return;
+            }
+            
+            // Validate team ID format (alphanumeric and dashes only)
+            if (!/^[a-zA-Z0-9-]+$/.test(teamIdInput)) {
+                showError("Team ID can only contain letters, numbers, and dashes");
+                return;
+            }
+            
+            teamId = teamIdInput;
+            showLoading(true);
+            
+            // Create a reference to the team's data
+            dataRef = database.ref('teams/' + teamId);
+            
+            // Check if team exists
+            dataRef.once('value')
+                .then(snapshot => {
+                    if (!snapshot.exists()) {
+                        // Team doesn't exist yet, show it as a new team
+                        updateConnectionStatus(`Connected to new team: ${teamId}`, true);
+                    } else {
+                        // Team exists, load the data
+                        updateConnectionStatus(`Connected to team: ${teamId}`, true);
+                        loadData();
+                    }
+                    
+                    // Set up real-time listener for data changes
+                    dataRef.on('value', snapshot => {
+                        if (snapshot.exists()) {
+                            const data = snapshot.val();
+                            if (data.lastUpdated) {
+                                const lastUpdate = new Date(data.lastUpdated);
+                                updateConnectionStatus(`Connected to team: ${teamId} (Last updated: ${lastUpdate.toLocaleString()})`, true);
                             }
                         }
                     });
                     
-                    const missedCtx = document.getElementById('missedChart').getContext('2d');
-                    missedChart = new Chart(missedCtx, {
-                        type: 'doughnut',
-                        data: {
-                            labels: [
-                                'Abandoned < 10s',
-                                'Abandoned on IVR',
-                                'Agents unavailable',
-                                'Not answered',
-                                'Outside hours'
-                            ],
-                            datasets: [{
-                                data: [0, 0, 0, 0, 0],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.8)',
-                                    'rgba(255, 159, 64, 0.8)',
-                                    'rgba(255, 205, 86, 0.8)',
-                                    'rgba(75, 192, 192, 0.8)',
-                                    'rgba(54, 162, 235, 0.8)'
-                                ]
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: {
-                                legend: {
-                                    position: 'right',
-                                    labels: {
-                                        boxWidth: 12,
-                                        font: {
-                                            size: 11
-                                        }
-                                    }
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'Missed Calls by Category'
-                                }
-                            }
-                        }
-                    });
-                    
-                    // If charts initialized successfully, show success message
-                    showSuccess("Dashboard initialized successfully!");
-                    return true;
-                } catch (e) {
-                    showError("Failed to initialize charts: " + e.message);
-                    return false;
-                }
+                    showLoading(false);
+                    showSuccess(`Successfully connected to team: ${teamId}`);
+                })
+                .catch(error => {
+                    showLoading(false);
+                    showError("Error connecting to team: " + error.message);
+                    updateConnectionStatus("Not connected", false);
+                });
+        }
+        
+        // Save data to Firebase
+        function saveData() {
+            if (!teamId) {
+                showError("Please connect to a team first");
+                return;
             }
             
-            // Save data to local storage
-            function saveData() {
-                if (!isLocalStorageAvailable()) {
-                    showError("Local storage is not available in this environment.");
-                    return;
-                }
+            showLoading(true);
+            
+            try {
+                // Get team data
+                const teamRows = document.querySelectorAll('#data-table tbody tr');
+                const teamData = [];
                 
-                try {
-                    // Get team data
-                    const teamRows = document.querySelectorAll('#data-table tbody tr');
-                    const teamData = [];
-                    
-                    teamRows.forEach((row, index) => {
-                        teamData.push({
-                            name: document.getElementById(`name-${index}`).value,
-                            status: document.getElementById(`status-${index}`).value,
-                            inbound: document.getElementById(`inbound-${index}`).value,
-                            outbound: document.getElementById(`outbound-${index}`).value
-                        });
+                teamRows.forEach((row, index) => {
+                    teamData.push({
+                        name: document.getElementById(`name-${index}`).value,
+                        status: document.getElementById(`status-${index}`).value,
+                        inbound: document.getElementById(`inbound-${index}`).value,
+                        outbound: document.getElementById(`outbound-${index}`).value
                     });
-                    
-                    // Get missed calls data
-                    const missedData = {
-                        abandoned10s: document.getElementById('abandoned-10s').value,
-                        abandonedIVR: document.getElementById('abandoned-ivr').value,
-                        agentsUnavailable: document.getElementById('agents-unavailable').value,
-                        notAnswered: document.getElementById('not-answered').value,
-                        outsideHours: document.getElementById('outside-hours').value
-                    };
-                    
-                    // Save to local storage
-                    const dataToSave = {
-                        teamData: teamData,
-                        missedData: missedData,
-                        lastUpdated: new Date().toISOString()
-                    };
-                    
-                    localStorage.setItem(getStorageKey(), JSON.stringify(dataToSave));
-                    showSuccess('Data saved successfully!');
-                } catch (e) {
-                    showError("Error saving data: " + e.message);
-                }
+                });
+                
+                // Get missed calls data
+                const missedData = {
+                    abandoned10s: document.getElementById('abandoned-10s').value,
+                    abandonedIVR: document.getElementById('abandoned-ivr').value,
+                    agentsUnavailable: document.getElementById('agents-unavailable').value,
+                    notAnswered: document.getElementById('not-answered').value,
+                    outsideHours: document.getElementById('outside-hours').value
+                };
+                
+                // Save to Firebase
+                const dataToSave = {
+                    teamData: teamData,
+                    missedData: missedData,
+                    lastUpdated: new Date().toISOString()
+                };
+                
+                dataRef.set(dataToSave)
+                    .then(() => {
+                        showLoading(false);
+                        showSuccess('Data saved successfully!');
+                    })
+                    .catch(error => {
+                        showLoading(false);
+                        showError("Error saving data: " + error.message);
+                    });
+            } catch (e) {
+                showLoading(false);
+                showError("Error saving data: " + e.message);
+            }
+        }
+        
+        // Load data from Firebase
+        function loadData() {
+            if (!teamId) {
+                showError("Please connect to a team first");
+                return;
             }
             
-            // Load data from local storage
-            function loadData() {
-                if (!isLocalStorageAvailable()) {
-                    showError("Local storage is not available in this environment.");
-                    return;
-                }
-                
-                try {
-                    const savedData = localStorage.getItem(getStorageKey());
+            showLoading(true);
+            
+            dataRef.once('value')
+                .then(snapshot => {
+                    showLoading(false);
                     
-                    if (!savedData) {
-                        showError('No saved data found!');
+                    if (!snapshot.exists()) {
+                        showError('No saved data found for this team!');
                         return;
                     }
                     
-                    const data = JSON.parse(savedData);
+                    const data = snapshot.val();
                     
                     // Load team data
                     const tbody = document.querySelector('#data-table tbody');
@@ -584,25 +612,189 @@
                     updateDashboard();
                     
                     showSuccess('Data loaded successfully!');
-                } catch (e) {
-                    showError("Error loading data: " + e.message);
-                }
+                })
+                .catch(error => {
+                    showLoading(false);
+                    showError("Error loading data: " + error.message);
+                });
+        }
+        
+        // Clear saved data
+        function clearData() {
+            if (!teamId) {
+                showError("Please connect to a team first");
+                return;
             }
             
-            // Clear saved data
-            function clearData() {
-                if (!isLocalStorageAvailable()) {
-                    showError("Local storage is not available in this environment.");
-                    return;
+            try {
+                if (confirm('Are you sure you want to clear all saved data for this team?')) {
+                    showLoading(true);
+                    
+                    dataRef.remove()
+                        .then(() => {
+                            showLoading(false);
+                            showSuccess('Team data cleared successfully!');
+                            updateConnectionStatus(`Connected to team: ${teamId} (No data)`, true);
+                        })
+                        .catch(error => {
+                            showLoading(false);
+                            showError("Error clearing data: " + error.message);
+                        });
                 }
-                
+            } catch (e) {
+                showLoading(false);
+                showError("Error clearing data: " + e.message);
+            }
+        }
+        
+        // Initialize the application
+        function initApp() {
+            // Safely initialize charts
+            function safeInitCharts() {
                 try {
-                    if (confirm('Are you sure you want to clear all saved data?')) {
-                        localStorage.removeItem(getStorageKey());
-                        showSuccess('Saved data cleared!');
-                    }
+                    const chartOptions = {
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: '#e0e0e0'
+                                }
+                            },
+                            title: {
+                                color: '#e0e0e0'
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: {
+                                    color: '#e0e0e0'
+                                },
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    color: '#e0e0e0'
+                                },
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                }
+                            }
+                        }
+                    };
+                
+                    const callsCtx = document.getElementById('callsChart').getContext('2d');
+                    callsChart = new Chart(callsCtx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Team Member 1', 'Team Member 2'],
+                            datasets: [
+                                {
+                                    label: 'Inbound Calls',
+                                    backgroundColor: 'rgba(54, 162, 235, 0.8)',
+                                    data: [0, 0]
+                                },
+                                {
+                                    label: 'Outbound Calls',
+                                    backgroundColor: 'rgba(75, 192, 192, 0.8)',
+                                    data: [0, 0]
+                                }
+                            ]
+                        },
+                        options: {
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Call Distribution by Team Member',
+                                    color: '#e0e0e0'
+                                },
+                                legend: {
+                                    labels: {
+                                        color: '#e0e0e0'
+                                    }
+                                }
+                            },
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: {
+                                    stacked: false,
+                                    ticks: {
+                                        color: '#e0e0e0'
+                                    },
+                                    grid: {
+                                        color: 'rgba(255, 255, 255, 0.1)'
+                                    }
+                                },
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Number of Calls',
+                                        color: '#e0e0e0'
+                                    },
+                                    ticks: {
+                                        color: '#e0e0e0'
+                                    },
+                                    grid: {
+                                        color: 'rgba(255, 255, 255, 0.1)'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    
+                    const missedCtx = document.getElementById('missedChart').getContext('2d');
+                    missedChart = new Chart(missedCtx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: [
+                                'Abandoned < 10s',
+                                'Abandoned on IVR',
+                                'Agents unavailable',
+                                'Not answered',
+                                'Outside hours'
+                            ],
+                            datasets: [{
+                                data: [0, 0, 0, 0, 0],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.8)',
+                                    'rgba(255, 159, 64, 0.8)',
+                                    'rgba(255, 205, 86, 0.8)',
+                                    'rgba(75, 192, 192, 0.8)',
+                                    'rgba(54, 162, 235, 0.8)'
+                                ]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'right',
+                                    labels: {
+                                        boxWidth: 12,
+                                        font: {
+                                            size: 11
+                                        },
+                                        color: '#e0e0e0'
+                                    }
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Missed Calls by Category',
+                                    color: '#e0e0e0'
+                                }
+                            }
+                        }
+                    });
+                    
+                    // If charts initialized successfully, show success message
+                    showSuccess("Dashboard initialized successfully!");
+                    return true;
                 } catch (e) {
-                    showError("Error clearing data: " + e.message);
+                    showError("Failed to initialize charts: " + e.message);
+                    return false;
                 }
             }
             
@@ -634,136 +826,4 @@
                         if (status === 'oo') {
                             inbound = 0;
                             outbound = 0;
-                            names.push(name + ' (OOO)');
-                        } else if (status === 'outbound-only') {
-                            inbound = 0;
-                            names.push(name + ' (Out only)');
-                        } else {
-                            names.push(name);
-                        }
-                        
-                        inboundData.push(inbound);
-                        outboundData.push(outbound);
-                        totalInbound += inbound;
-                        totalOutbound += outbound;
-                    });
-                    
-                    // Update team call chart
-                    callsChart.data.labels = names;
-                    callsChart.data.datasets[0].data = inboundData;
-                    callsChart.data.datasets[1].data = outboundData;
-                    callsChart.update();
-                    
-                    // Get missed calls data
-                    const abandoned10s = parseInt(document.getElementById('abandoned-10s').value) || 0;
-                    const abandonedIVR = parseInt(document.getElementById('abandoned-ivr').value) || 0;
-                    const agentsUnavailable = parseInt(document.getElementById('agents-unavailable').value) || 0;
-                    const notAnswered = parseInt(document.getElementById('not-answered').value) || 0;
-                    const outsideHours = parseInt(document.getElementById('outside-hours').value) || 0;
-                    
-                    // Calculate key metrics
-                    const unavoidableMissed = abandoned10s + abandonedIVR + outsideHours;
-                    const avoidableMissed = agentsUnavailable + notAnswered;
-                    const totalMissed = unavoidableMissed + avoidableMissed;
-                    
-                    // Update missed calls chart
-                    missedChart.data.datasets[0].data = [
-                        abandoned10s,
-                        abandonedIVR,
-                        agentsUnavailable,
-                        notAnswered,
-                        outsideHours
-                    ];
-                    missedChart.update();
-                    
-                    // Calculate call stats
-                    const totalCalls = totalInbound + totalOutbound;
-                    
-                    // Calculate the percentage of avoidable missed calls
-                    const totalInboundIncludingMissed = totalInbound + totalMissed;
-                    const avoidablePercentage = totalInboundIncludingMissed > 0 
-                        ? ((avoidableMissed / totalInboundIncludingMissed) * 100).toFixed(2)
-                        : 0;
-                    
-                    // Update stats display
-                    document.getElementById('total-inbound').textContent = totalInbound;
-                    document.getElementById('total-outbound').textContent = totalOutbound;
-                    document.getElementById('total-calls').textContent = totalCalls;
-                    
-                    document.getElementById('total-missed').textContent = totalMissed;
-                    document.getElementById('unavoidable-missed').textContent = unavoidableMissed;
-                    document.getElementById('avoidable-missed').textContent = avoidableMissed;
-                    document.getElementById('avoidable-percentage').textContent = avoidablePercentage + '%';
-                    
-                    showSuccess("Dashboard updated successfully!");
-                } catch (e) {
-                    showError("Error updating dashboard: " + e.message);
-                }
-            }
-            
-            // Add row to the table
-            function addRow() {
-                try {
-                    const tbody = document.querySelector('#data-table tbody');
-                    const nextIndex = tbody.children.length;
-                    const newRow = document.createElement('tr');
-                    newRow.innerHTML = `
-                        <td>
-                            <input type="text" placeholder="Name" id="name-${nextIndex}" value="Team Member ${nextIndex + 1}">
-                        </td>
-                        <td>
-                            <select class="status-select" id="status-${nextIndex}">
-                                <option value="active">Active (In/Out)</option>
-                                <option value="outbound-only">Outbound Only</option>
-                                <option value="oo">Out of Office</option>
-                            </select>
-                        </td>
-                        <td>
-                            <input type="number" class="inbound" id="inbound-${nextIndex}" value="0" min="0">
-                        </td>
-                        <td>
-                            <input type="number" class="outbound" id="outbound-${nextIndex}" value="0" min="0">
-                        </td>
-                    `;
-                    tbody.appendChild(newRow);
-                } catch (e) {
-                    showError("Error adding row: " + e.message);
-                }
-            }
-            
-            // Remove the last row from the table
-            function removeRow() {
-                try {
-                    const tbody = document.querySelector('#data-table tbody');
-                    if (tbody.rows.length > 1) {
-                        tbody.deleteRow(tbody.rows.length - 1);
-                    } else {
-                        showError('Cannot remove the last row');
-                    }
-                } catch (e) {
-                    showError("Error removing row: " + e.message);
-                }
-            }
-            
-            // Set up event listeners only if charts are initialized
-            if (safeInitCharts()) {
-                // Add event listeners
-                document.getElementById('update-chart').addEventListener('click', updateDashboard);
-                document.getElementById('save-data').addEventListener('click', saveData);
-                document.getElementById('load-data').addEventListener('click', loadData);
-                document.getElementById('clear-data').addEventListener('click', clearData);
-                document.getElementById('add-row').addEventListener('click', addRow);
-                document.getElementById('remove-row').addEventListener('click', removeRow);
-                
-                // Initialize the dashboard with sample data
-                updateDashboard();
-            }
-        }
-        
-        // Safely initialize everything when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            waitForChartJs(initApp);
-        });
-    </script>
-</body>
-</html>
+                            names.push(name
