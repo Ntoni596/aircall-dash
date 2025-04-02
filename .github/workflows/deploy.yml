@@ -2,7 +2,7 @@ name: Deploy AirCall Dashboard
 
 on:
   push:
-    branches: [ main ]  # Adjust this to match your main branch name
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -32,19 +32,8 @@ jobs:
           echo "  measurementId: \"${{ secrets.FIREBASE_MEASUREMENT_ID }}\"" >> config.js
           echo "};" >> config.js
       
-      - name: Verify config file
-        run: |
-          echo "Checking if config.js exists..."
-          if [ -f config.js ]; then
-            echo "config.js exists"
-            wc -l config.js
-          else
-            echo "config.js does not exist!"
-            ls -la
-          fi
-      
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: .  # Deploy everything in the repo
-          token: ${{ secrets.GITHUB_TOKEN }}  # Add this line explicitly
+          folder: .  # Deploy the entire repository
+          token: ${{ secrets.DEPLOY_TOKEN }}  # Use your personal access token
