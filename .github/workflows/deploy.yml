@@ -46,4 +46,5 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: .  # Deploy the entire directory
+          folder: .  # Deploy everything in the repo
+          token: ${{ secrets.GITHUB_TOKEN }}  # Add this line explicitly
