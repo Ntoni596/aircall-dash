@@ -808,7 +808,7 @@
                     missedChart.update();
                     
                     // Calculate call stats
-                    const totalCalls = totalInbound + totalOutbound;
+                    const totalCalls = totalInbound + totalOutbound +  totalMissed;
                     
                     // Calculate the percentage of avoidable missed calls
                     const totalInboundIncludingMissed = totalInbound + totalMissed;
